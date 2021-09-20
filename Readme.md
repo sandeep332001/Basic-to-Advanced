@@ -1,3 +1,5 @@
 ### Binary to Decimal [Incomplete]
 ### Longest Arithmetic Subarrary [Incomplete]
 ### Spiral Order Traversal in Matrix [Incomplete]
+### Rat in Maze with obstacle [Incomplete]
+### Mode of Euclidean Distance [Incomplete]
