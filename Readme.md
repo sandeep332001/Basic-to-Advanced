@@ -3,3 +3,5 @@
 ### Spiral Order Traversal in Matrix [Incomplete]
 ### Rat in Maze with obstacle [Incomplete]
 ### Mode of Euclidean Distance [Incomplete]
+### Detect and Remove Loop [Incomplete]
+### Reverse Stack without extra Stack [Incomplete]
