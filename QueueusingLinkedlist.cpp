@@ -35,6 +35,7 @@ public:
         head = NULL;
         tail = NULL;
     }
+    
     void enqueue(int data)
     {
         node *tmp = new node;
