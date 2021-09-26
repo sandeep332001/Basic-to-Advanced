@@ -5,3 +5,4 @@
 ### Mode of Euclidean Distance [Incomplete]
 ### Detect and Remove Loop [Incomplete]
 ### Reverse Stack without extra Stack [Incomplete]
+### Sliding Window Maximum using Deque[Incomplete]
