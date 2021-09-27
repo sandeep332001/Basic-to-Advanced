@@ -28,16 +28,17 @@ typedef pair<int, int> pi;
 #define INF LONG_LONG_MAX
 #define MINF LONG_LONG_MIN
 
-void swap(int &a, int &b)
+void swap(int *xp, int *yp)
 {
-    a = a ^ b;
-    b = a ^ b;
-    a = a ^ b;
+    int temp = *xp;
+    *xp = *yp;
+    *yp = temp;
 }
 
-void bubble_sort(vi &v)
+int bubble_sort(vector<int> &v)
 {
     int length = v.size();
+    int ans = 0;
     for (int i = 0; i < length - 1; i++)
     {
         bool swapped = false;
@@ -45,13 +46,15 @@ void bubble_sort(vi &v)
         {
             if (v[j + 1] < v[j])
             {
-                swap(v[j + 1], v[j]);
+                swap(&v[j + 1], &v[j]);
+                ans++;
                 swapped = true;
             }
         }
         if (!swapped)
-            return;
+            return ans;
     }
+    return ans;
 }
 
 int testcase(int t)
@@ -62,9 +65,7 @@ int testcase(int t)
         cin >> n;
         vi v(n);
         f(i, 0, n) cin >> v[i];
-        bubble_sort(v);
-        for (auto x : v)
-            cout << x << " ";
+        cout << "Number of swap " << bubble_sort(v);
     }
     return 0;
 }
