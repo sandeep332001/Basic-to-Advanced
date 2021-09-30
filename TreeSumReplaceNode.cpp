@@ -25,52 +25,37 @@ public:
     Node(int val)
     {
         data = val;
-        right = left = NULL;
+        left = right = NULL;
     }
 };
 
 Node *createTree(vector<int> arr, Node *root, int i, int n)
 {
-    if (i < n)
+    if (i < n && arr[i])
     {
-        Node *node = new Node(arr[i]);
-        root = node;
+        Node *curr = new Node(arr[i]);
+        root = curr;
         root->left = createTree(arr, root->left, 2 * (i + 1) - 1, n);
         root->right = createTree(arr, root->right, 2 * (i + 1), n);
     }
+
     return root;
 }
 
-void levelOrder(Node *root)
+int sumReplaceNode(Node *root)
+{
+    if (root == NULL)
+        return 0;
+    return root->data += sumReplaceNode(root->left) + sumReplaceNode(root->right);
+}
+
+void inorder(Node *root)
 {
     if (root == NULL)
         return;
-    queue<Node *> q;
-    q.push(root);
-    q.push(NULL);
-
-    int kthSum = 0;
-    while (!q.empty())
-    {
-        Node *temp = q.front();
-        q.pop();
-        if (temp != NULL)
-        {
-            // cout << temp->data << " ";
-
-            kthSum += temp->data;
-            if (temp->left)
-                q.push(temp->left);
-            if (temp->right != NULL)
-                q.push(temp->right);
-        }
-        else if (!q.empty())
-        {
-            cout << kthSum << endl;
-            q.push(NULL);
-            kthSum = 0;
-        }
-    }
+    inorder(root->left);
+    cout << root->data << " ";
+    inorder(root->right);
 }
 
 int main()
@@ -90,9 +75,9 @@ int main()
         for (auto &i : v)
             cin >> i;
         Node *root;
-        root = createTree(v, NULL, 0, v.size());
-        // I have added sum of kth level
-        levelOrder(root);
+        root = createTree(v, NULL, 0, n);
+        sumReplaceNode(root);
+        inorder(root);
     }
     return 0;
 }

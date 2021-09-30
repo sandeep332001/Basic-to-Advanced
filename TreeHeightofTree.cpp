@@ -25,52 +25,53 @@ public:
     Node(int val)
     {
         data = val;
-        right = left = NULL;
+        left = right = NULL;
     }
 };
 
 Node *createTree(vector<int> arr, Node *root, int i, int n)
 {
-    if (i < n)
+    if ((i < n) && arr[i])
     {
-        Node *node = new Node(arr[i]);
-        root = node;
+        Node *curr = new Node(arr[i]);
+        root = curr;
         root->left = createTree(arr, root->left, 2 * (i + 1) - 1, n);
         root->right = createTree(arr, root->right, 2 * (i + 1), n);
     }
+
     return root;
 }
 
-void levelOrder(Node *root)
+void inorder(Node *root)
 {
     if (root == NULL)
         return;
-    queue<Node *> q;
-    q.push(root);
-    q.push(NULL);
+    inorder(root->left);
+    cout << root->data << " ";
+    inorder(root->right);
+}
 
-    int kthSum = 0;
-    while (!q.empty())
-    {
-        Node *temp = q.front();
-        q.pop();
-        if (temp != NULL)
-        {
-            // cout << temp->data << " ";
+int heightofTree(Node *root)
+{
+    if (root == NULL)
+        return 0;
+    return max(heightofTree(root->left), heightofTree(root->right)) + 1;
+}
 
-            kthSum += temp->data;
-            if (temp->left)
-                q.push(temp->left);
-            if (temp->right != NULL)
-                q.push(temp->right);
-        }
-        else if (!q.empty())
-        {
-            cout << kthSum << endl;
-            q.push(NULL);
-            kthSum = 0;
-        }
-    }
+int diameter(Node *root)
+{
+    if (root == NULL)
+        return 0;
+
+    int leftHeight = heightofTree(root->left);
+    int rightHeight = heightofTree(root->right);
+
+    int currDiameter = leftHeight + rightHeight + 1;
+
+    int ldiameter = diameter(root->left);
+    int rdiameter = diameter(root->right);
+
+    return max(currDiameter, max(ldiameter, rdiameter));
 }
 
 int main()
@@ -90,9 +91,10 @@ int main()
         for (auto &i : v)
             cin >> i;
         Node *root;
-        root = createTree(v, NULL, 0, v.size());
-        // I have added sum of kth level
-        levelOrder(root);
+        root = createTree(v, NULL, 0, n);
+        inorder(root);
+        cout << endl;
+        cout << heightofTree(root);
     }
     return 0;
 }
